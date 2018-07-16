@@ -26,4 +26,5 @@ public class Client {
                 ", name='" + name + '\'' +
                 '}';
     }
+
 }
