@@ -7,13 +7,16 @@ public class App {
     Client client;
     ConsoleEventLogger eventLogger;
 
+    public App(Client client, ConsoleEventLogger eventLogger) {
+        this.client = client;
+        this.eventLogger = eventLogger;
+    }
+
     public static void main(String[] args) {
-        App app = new App();
 
-        app.client = new Client("1", "Jon Smith");
-        app.eventLogger = new ConsoleEventLogger();
-
-        app.logEvent("Event for User_1");
+        //app.client = new Client("1", "Jon Smith"); // не будем создавать Клиента
+        //app.eventLogger = new ConsoleEventLogger(); // и КонсольЭвентЛоггер
+        //app.logEvent("Event for User_1");
     }
     // принимает строку и обращается к ЭвентЛоггеру, чтобы он уже ею
     // занимался. Метод replaceAll из библ Джава заменит ИД на ИМЯ
