@@ -36,4 +36,7 @@ public class App {
         eventLogger.logEvent(message);
     }
 
-}
+}/*
+    я из логИвента
+    я из логИвента
+*/
