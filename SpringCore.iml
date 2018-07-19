@@ -5,6 +5,7 @@
       <configuration>
         <fileset id="fileset" name="Spring Config" removed="false">
           <file>file://$MODULE_DIR$/src/main/resources/spring-config.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/spring.xml</file>
         </fileset>
       </configuration>
     </facet>
@@ -18,7 +19,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="9" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="Maven: org.springframework:spring-context:3.2.13.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.springframework:spring-aop:3.2.13.RELEASE" level="project" />
