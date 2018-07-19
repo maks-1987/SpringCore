@@ -33,10 +33,11 @@ public class App {
     // занимался. Метод replaceAll из библ Джава заменит ИД на ИМЯ
     private void logEvent(String msg) {
         String message = msg.replaceAll(client.getId(), client.getFullName());
+        //String message = client.getFullName();
         eventLogger.logEvent(message);
     }
 
 }/*
-    я из логИвента
-    я из логИвента
+    Some event for Client{id='1', name='John Smith'} я из логИвента
+    Some event for 2 я из логИвента
 */
