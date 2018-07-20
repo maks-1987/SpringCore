@@ -1,3 +1,5 @@
+import Loggers.ConsoleEventLogger;
+import Loggers.EventLogger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -7,10 +9,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class App {
 
-    Client client;
-    ConsoleEventLogger eventLogger;
+    private Client client;
+    private EventLogger eventLogger; // объект интерфейса ЭвентЛоггер
 
-    App(Client client, ConsoleEventLogger eventLogger) {
+    public App(Client client, ConsoleEventLogger eventLogger) {
+        super();
         this.client = client;
         this.eventLogger = eventLogger;
     }
@@ -26,7 +29,7 @@ public class App {
         app.logEvent("Some event for 2");
 
         //app.client = new Client("1", "Jon Smith"); // не будем создавать Клиента
-        //app.eventLogger = new ConsoleEventLogger(); // и КонсольЭвентЛоггер
+        //app.eventLogger = new Loggers.ConsoleEventLogger(); // и КонсольЭвентЛоггер
         //app.logEvent("Event for User_1");
     }
     // принимает строку и обращается к ЭвентЛоггеру, чтобы он уже ею
@@ -38,6 +41,6 @@ public class App {
     }
 
 }/*
-    Some event for Client{id='1', name='John Smith'} я из логИвента
+    Some event for John Smith я из логИвента
     Some event for 2 я из логИвента
 */

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="client" class="Client">
         <constructor-arg type="java.lang.String" value="1"/>
@@ -13,14 +14,14 @@
         <constructor-arg ref="eventLogger"/>
     </bean>
 
-    <bean id="eventLogger" class="ConsoleEventLogger" />
+    <bean id="eventLogger" class="Loggers.ConsoleEventLogger" />
 
     <!--<bean id="client" class="Client">
         <constructor-arg index="0" value=""/>
         <constructor-arg index="1" value=""/>
     </bean>
 
-    <bean id="eventLogger" class="ConsoleEventLogger"/>
+    <bean id="eventLogger" class="Loggers.ConsoleEventLogger"/>
 
     <bean id="app" class="App">
         <constructor-arg index="0" ref="client"/>
