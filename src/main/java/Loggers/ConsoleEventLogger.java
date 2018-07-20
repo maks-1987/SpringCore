@@ -1,9 +1,11 @@
 package Loggers;
 
+import Beans.Event;
+
 public class ConsoleEventLogger implements EventLogger {
 
     @Override
-    public void logEvent(String msg) {
-        System.out.println(msg + " я из логИвента");
+    public void logEvent(Event event) {
+        System.out.println(event.toString() + " я из логИвента");
     }
 }

@@ -1,5 +1,8 @@
+import Beans.Client;
+import Beans.Event;
 import Loggers.ConsoleEventLogger;
 import Loggers.EventLogger;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -12,32 +15,34 @@ public class App {
     private Client client;
     private EventLogger eventLogger; // объект интерфейса ЭвентЛоггер
 
-    public App(Client client, ConsoleEventLogger eventLogger) {
-        super();
-        this.client = client;
-        this.eventLogger = eventLogger;
-    }
-
     public static void main(String[] args) {
         // указываем где искать настройки spring
         ApplicationContext ctx =
                 new ClassPathXmlApplicationContext("spring.xml");
         App app = (App) ctx.getBean("app");
 
+        Event event = ctx.getBean(Event.class);
         // вызвать у бина app метод logEvent
-        app.logEvent("Some event for 1");
-        app.logEvent("Some event for 2");
+        app.logEvent(event, "Some event for 1");
 
-        //app.client = new Client("1", "Jon Smith"); // не будем создавать Клиента
+        event = ctx.getBean(Event.class);
+        app.logEvent(event, "Some event for 2");
+
+        //app.client = new Beans.Client("1", "Jon Smith"); // не будем создавать Клиента
         //app.eventLogger = new Loggers.ConsoleEventLogger(); // и КонсольЭвентЛоггер
-        //app.logEvent("Event for User_1");
+        //app.logEvent("Beans.Event for User_1");
+    }
+    public App(Client client, ConsoleEventLogger eventLogger) {
+        //super();
+        this.client = client;
+        this.eventLogger = eventLogger;
     }
     // принимает строку и обращается к ЭвентЛоггеру, чтобы он уже ею
     // занимался. Метод replaceAll из библ Джава заменит ИД на ИМЯ
-    private void logEvent(String msg) {
+    private void logEvent(Event event, String msg) {
         String message = msg.replaceAll(client.getId(), client.getFullName());
-        //String message = client.getFullName();
-        eventLogger.logEvent(message);
+        event.setMsg(message);
+        eventLogger.logEvent(event);
     }
 
 }/*

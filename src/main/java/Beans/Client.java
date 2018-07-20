@@ -1,15 +1,17 @@
+package Beans;
+
 public class Client {
 
     private String id;
     private String fullName;
 
     public Client(String id, String name) {
-        super();
+        //super();
         this.id = id;
         this.fullName = name;
     }
 
-    String getId() {
+    public String getId() {
         return id;
     }
 
@@ -27,7 +29,7 @@ public class Client {
 
 /*    // этот метод заменит toString
     String getFullName() {
-        return "Client{" +
+        return "Beans.Client{" +
                 "id='" + id + '\'' +
                 ", name='" + fullName + '\'' +
                 '}';
