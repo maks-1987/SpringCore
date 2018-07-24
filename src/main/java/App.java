@@ -4,6 +4,7 @@ import Loggers.ConsoleEventLogger;
 import Loggers.EventLogger;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -17,7 +18,7 @@ public class App {
 
     public static void main(String[] args) {
         // указываем где искать настройки spring
-        ApplicationContext ctx =
+        ConfigurableApplicationContext ctx =
                 new ClassPathXmlApplicationContext("spring.xml");
         App app = (App) ctx.getBean("app");
 

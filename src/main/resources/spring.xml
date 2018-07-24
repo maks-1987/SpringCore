@@ -28,6 +28,17 @@
     <bean id="dateFormat" class="java.text.DateFormat"
           factory-method="getDateTimeInstance"/>
 
+    <bean id="fileEventLogger" class="Loggers.FileEventLogger"
+          init-method="init">
+        <constructor-arg value="target/events_log.txt"/>
+    </bean>
+
+    <bean id="cacheFileEventLogger" class="Loggers.CacheFileEventLogger"
+          destroy-method="destroy">
+        <constructor-arg value="target/events_log.txt"/>
+        <constructor-arg value="5"/>
+    </bean>
+
     <!--<bean id="client" class="Beans.Client">
         <constructor-arg index="0" value=""/>
         <constructor-arg index="1" value=""/>
