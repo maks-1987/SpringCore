@@ -37,5 +37,4 @@ class CacheFileEventLogger extends FileEventLogger {
     }
 
 
-
 }
