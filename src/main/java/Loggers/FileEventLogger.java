@@ -11,11 +11,11 @@ public class FileEventLogger implements EventLogger {
     private File file;
     private String fileName;
 
-    FileEventLogger(String fileName) {
+    public FileEventLogger(String fileName) {
         this.fileName = fileName;
     }
 
-    void init() {
+    public void init() { // проверит доступен ли файл для записи в него
         file = new File(fileName);
         //this.file = new File(fileName);
         if (file.exists() && !file.canWrite()) {

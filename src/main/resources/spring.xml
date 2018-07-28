@@ -4,6 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <import resource="loggers.xml"/>
+
     <!--Тут происходит инжект зависимости в класс App c помощью атриб "ref"-->
     <bean id="app" class="App">
         <constructor-arg ref="client"/>
@@ -15,8 +17,6 @@
         <constructor-arg type="java.lang.String" value="John Smith"/>
     </bean>
 
-    <bean id="eventLogger" class="Loggers.ConsoleEventLogger" />
-
     <bean id="event" class="Beans.Event" scope="prototype">
         <constructor-arg>
             <!--Тип первого аргумента конструктора - Date -->
@@ -27,17 +27,6 @@
 
     <bean id="dateFormat" class="java.text.DateFormat"
           factory-method="getDateTimeInstance"/>
-
-    <bean id="fileEventLogger" class="Loggers.FileEventLogger"
-          init-method="init">
-        <constructor-arg value="target/events_log.txt"/>
-    </bean>
-
-    <bean id="cacheFileEventLogger" class="Loggers.CacheFileEventLogger"
-          destroy-method="destroy">
-        <constructor-arg value="target/events_log.txt"/>
-        <constructor-arg value="5"/>
-    </bean>
 
     <!--<bean id="client" class="Beans.Client">
         <constructor-arg index="0" value=""/>

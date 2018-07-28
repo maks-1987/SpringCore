@@ -29,6 +29,7 @@ public class App {
         event = ctx.getBean(Event.class);
         app.logEvent(event, "Some event for 2");
 
+        ctx.close();
         //app.client = new Beans.Client("1", "Jon Smith"); // не будем создавать Клиента
         //app.eventLogger = new Loggers.ConsoleEventLogger(); // и КонсольЭвентЛоггер
         //app.logEvent("Beans.Event for User_1");
