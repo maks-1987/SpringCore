@@ -9,12 +9,19 @@
     <!--Тут происходит инжект зависимости в класс App c помощью атриб "ref"-->
     <bean id="app" class="App">
         <constructor-arg ref="client"/>
-        <constructor-arg ref="eventLogger"/>
+        <constructor-arg ref="cacheFileEventLogger"/>
+        <constructor-arg>
+            <map>
+                <entry key="INFO" value-ref="consoleEventLogger"/>
+                <entry key="ERROR" value-ref="combinedEventLogger"/>
+            </map>
+        </constructor-arg>
     </bean>
 
     <bean id="client" class="Beans.Client">
         <constructor-arg type="java.lang.String" value="1"/>
         <constructor-arg type="java.lang.String" value="John Smith"/>
+        <property name="greeting" value="Hello there!"/>
     </bean>
 
     <bean id="event" class="Beans.Event" scope="prototype">
@@ -27,6 +34,15 @@
 
     <bean id="dateFormat" class="java.text.DateFormat"
           factory-method="getDateTimeInstance"/>
+
+<!--    <bean id="eventType" class="Loggers.CombinedEventLogger">
+        <constructor-arg>
+            <list>
+                <ref bean="consoleEventLogger"/>
+                <ref bean="fileEventLogger"/>
+            </list>
+        </constructor-arg>
+    </bean>-->
 
     <!--<bean id="client" class="Beans.Client">
         <constructor-arg index="0" value=""/>

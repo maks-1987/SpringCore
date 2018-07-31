@@ -15,24 +15,21 @@ public class FileEventLogger implements EventLogger {
         this.fileName = fileName;
     }
 
-    public void init() { // проверит доступен ли файл для записи в него
+    public void init() throws IOException { // проверит доступен ли файл для записи в него
         file = new File(fileName);
         //this.file = new File(fileName);
         if (file.exists() && !file.canWrite()) {
             throw new IllegalArgumentException("Can't write to file..." + fileName);
         } else if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (Exception e) {
-                throw new IllegalArgumentException("Can't create to file..." + e);
-            }
+            file.createNewFile();
         }
     }
 
     @Override
     public void logEvent(Event event) {
         try {
-            FileUtils.writeStringToFile(file, event.toString(), true);
+            FileUtils.writeStringToFile(file, event.toString()
+                    + "\n", true);
         } catch (IOException e) {
             e.printStackTrace();
         }

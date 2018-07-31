@@ -19,6 +19,7 @@ public class Event {
 
     public Event(Date d, DateFormat df) {
         this.id = AUTO_ID.getAndIncrement();
+
         this.date = d;
         this.dateFormat = df;
     }
@@ -41,10 +42,7 @@ public class Event {
 
     @Override
     public String toString() {
-        return "Beans.Event {" +
-                "id=" + id +
-                ", msg='" + msg + '\'' +
-                ", date=" + date +
-                '}';
+        return "Beans.Event {" + "id=" + id + ", msg='" + msg + '\'' +
+                ", date=" + dateFormat.format(date) + '}';
     }
 }

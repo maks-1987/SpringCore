@@ -19,7 +19,7 @@ class CacheFileEventLogger extends FileEventLogger {
     public void destroy() {
         if (!cache.isEmpty())
             writeEventsFromCache();
-        cache.clear();
+        //cache.clear();
     }
 
     @Override
@@ -33,6 +33,7 @@ class CacheFileEventLogger extends FileEventLogger {
     }
 
     private void writeEventsFromCache() {
+        // stream() - метод коллекции Java
         cache.stream().forEach(super::logEvent);
     }
 
