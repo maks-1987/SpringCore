@@ -19,13 +19,12 @@ class CacheFileEventLogger extends FileEventLogger {
     public void destroy() {
         if (!cache.isEmpty())
             writeEventsFromCache();
-        //cache.clear();
     }
 
     @Override
     public void logEvent(Event event) {
         cache.add(event);
-
+        // очищает кэш, перед этим записывае логи в файл
         if (cache.size()==cacheSize) {
             writeEventsFromCache();
             cache.clear();

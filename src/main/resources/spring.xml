@@ -1,29 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans.xsd">
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/util
+            http://www.springframework.org/schema/util/spring-util-3.2.xsd">
 
     <import resource="loggers.xml"/>
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <!-- search file.properties -->
+                <value>classpath:client.properties</value>
+            </list>
+        </property>
+        <!-- будет игнорить отсутствующие ресурсы -->
+        <property name="ignoreResourceNotFound" value="true"/>
+        <!-- если ключь ек будет найден в проперти-файле Спринг ищет в системных
+         свойствах переменных окружения -->
+        <property name="systemPropertiesModeName"
+                  value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+    </bean>
+
+    <!-- вычитывает значения из файла .properties -->
+    <bean id="client" class="Beans.Client"
+          p:greeting="${greeting}">
+        <constructor-arg index="0" value="${id}" />
+        <constructor-arg value="${name}" />
+    </bean>
+
+    <!-- Вынесли <map> в отдельный бин из <constructor-arg> app бина -->
+    <util:map id="loggerMap">
+        <entry key="INFO" value-ref="consoleEventLogger" />
+        <entry key="ERROR" value-ref="combinedEventLogger" />
+    </util:map>
 
     <!--Тут происходит инжект зависимости в класс App c помощью атриб "ref"-->
     <bean id="app" class="App">
         <constructor-arg ref="client"/>
         <constructor-arg ref="cacheFileEventLogger"/>
-        <constructor-arg>
-            <map>
+        <constructor-arg ref="loggerMap">
+            <!--<map>
                 <entry key="INFO" value-ref="consoleEventLogger"/>
                 <entry key="ERROR" value-ref="combinedEventLogger"/>
-            </map>
+            </map>-->
         </constructor-arg>
     </bean>
 
-    <bean id="client" class="Beans.Client">
-        <constructor-arg type="java.lang.String" value="1"/>
-        <constructor-arg type="java.lang.String" value="John Smith"/>
-        <property name="greeting" value="Hello there!"/>
-    </bean>
-
+    <!-- каждый раз создает новый бин-эвент при обращении -->
     <bean id="event" class="Beans.Event" scope="prototype">
         <constructor-arg>
             <!--Тип первого аргумента конструктора - Date -->
@@ -32,9 +60,13 @@
         <constructor-arg ref="dateFormat"/>
     </bean>
 
+    <!-- обращение к статик полям с помощью фактори-метода -->
     <bean id="dateFormat" class="java.text.DateFormat"
           factory-method="getDateTimeInstance"/>
 
+    <bean id="monitor" class="util.Monitor"/>
+    <bean id="awared" class="util.AwareBean"
+          init-method="init"/>
 <!--    <bean id="eventType" class="Loggers.CombinedEventLogger">
         <constructor-arg>
             <list>

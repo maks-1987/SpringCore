@@ -24,16 +24,16 @@ public class Event {
         this.dateFormat = df;
     }
 
-    public int getId() {
-        return id;
-    }
-
     public String getMsg() {
         return msg;
     }
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public Date getDate() {

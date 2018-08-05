@@ -8,6 +8,7 @@
 
     <bean id="fileEventLogger" class="Loggers.FileEventLogger"
           init-method="init">
+        <!-- init() метод будет писать логи в файл директории target/... -->
         <constructor-arg value="target/events_log.txt"/>
     </bean>
 

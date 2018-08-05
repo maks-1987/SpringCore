@@ -2,5 +2,7 @@ package Beans;
 
 public enum EventType {
 
-    INFO, ERROR
+    INFO,
+    ERROR
+
 }

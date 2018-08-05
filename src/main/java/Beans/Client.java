@@ -6,10 +6,10 @@ public class Client {
     private String fullName;
     private String greeting;
 
-    public Client(String id, String name) {
+    public Client(String id, String fullName) {
         //super();
         this.id = id;
-        this.fullName = name;
+        this.fullName = fullName;
     }
 
     public String getId() {
