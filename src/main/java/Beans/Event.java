@@ -2,25 +2,31 @@ package Beans;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.time.LocalTime;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Это будет Bean-объект, который будет передан Spring
  */
 public class Event {
-    // AtomicInteger переменная для автогенерации "id" События, начиная с нуля
+
     private static final AtomicInteger AUTO_ID = new AtomicInteger(0);
+
+    public static boolean isDay(int start, int end) {
+        LocalTime time = LocalTime.now();
+        return time.getHour() > start && time.getHour() < end;
+    }
 
     private int id;
     private String msg;
     private Date date;
 
-    private DateFormat dateFormat; // библиотечный класс Джава
+    private DateFormat dateFormat;
 
-    public Event(Date d, DateFormat df) {
+    public Event(Date date, DateFormat df) {
         this.id = AUTO_ID.getAndIncrement();
 
-        this.date = d;
+        this.date = date;
         this.dateFormat = df;
     }
 
@@ -42,7 +48,8 @@ public class Event {
 
     @Override
     public String toString() {
-        return "Beans.Event {" + "id=" + id + ", msg='" + msg + '\'' +
-                ", date=" + dateFormat.format(date) + '}';
+        return "Event [id=" + id + ", msg=" + msg +
+                ", date=" + dateFormat.format(date) + "]";
     }
+
 }

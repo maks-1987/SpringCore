@@ -42,32 +42,42 @@
     <!--Тут происходит инжект зависимости в класс App c помощью атриб "ref"-->
     <bean id="app" class="App">
         <constructor-arg ref="client"/>
-        <constructor-arg ref="cacheFileEventLogger"/>
-        <constructor-arg ref="loggerMap">
+
+        <constructor-arg value="#{T(Beans.Event).isDay(8,17) ?
+                            cacheFileEventLogger : consoleEventLogger }"/>
+<!--    <constructor-arg ref="cacheFileEventLogger"/> -->
+
+        <constructor-arg ref="loggerMap"/>
             <!--<map>
                 <entry key="INFO" value-ref="consoleEventLogger"/>
                 <entry key="ERROR" value-ref="combinedEventLogger"/>
             </map>-->
-        </constructor-arg>
+        <property name="startupMessage" value="#{'Hello user ' + (
+                    systemProperties['os.name'].contains('Windows') ?
+                    systemEnvironment['USERNAME'] : systemEnvironment['USER'] )
+                    + '. Default logger is ' + app.defaultLogger.name }"/>
     </bean>
 
     <!-- каждый раз создает новый бин-эвент при обращении -->
     <bean id="event" class="Beans.Event" scope="prototype">
-        <constructor-arg>
-            <!--Тип первого аргумента конструктора - Date -->
+        <!--<constructor-arg>
+            &lt;!&ndash;Тип первого аргумента конструктора - Date &ndash;&gt;
             <bean class="java.util.Date"/>
         </constructor-arg>
-        <constructor-arg ref="dateFormat"/>
+        <constructor-arg ref="dateFormat"/>-->
+
+    <!--Переписано с использованием SpEL-->
+        <constructor-arg value="#{new java.util.Date()}"/>
+        <constructor-arg value="#{T(java.text.DateFormat).getDateTimeInstance()}"/>
     </bean>
 
     <!-- обращение к статик полям с помощью фактори-метода -->
-    <bean id="dateFormat" class="java.text.DateFormat"
-          factory-method="getDateTimeInstance"/>
+    <!--<bean id="dateFormat" class="java.text.DateFormat"
+          factory-method="getDateTimeInstance"/>-->
 
     <bean id="monitor" class="util.Monitor"/>
-    <bean id="awared" class="util.AwareBean"
-          init-method="init"/>
-<!--    <bean id="eventType" class="Loggers.CombinedEventLogger">
+    <bean id="awared" class="util.AwareBean" init-method="init"/>
+<!--<bean id="eventType" class="Loggers.CombinedEventLogger">
         <constructor-arg>
             <list>
                 <ref bean="consoleEventLogger"/>

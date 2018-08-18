@@ -17,12 +17,15 @@ public class App {
     private Client client;
     private EventLogger defaultLogger; // объект интерфейса ЭвентЛоггер
     private Map<EventType, EventLogger> loggers;
+    private String startupMessage;
 
     public static void main(String[] args) {
         // указываем где искать настройки spring
         ConfigurableApplicationContext ctx = new
                 ClassPathXmlApplicationContext("spring.xml");
         App app = (App) ctx.getBean("app");
+
+        System.out.println(app.startupMessage);
 
         Client client = ctx.getBean(Client.class);
         System.out.println("Class says: " + client.getGreeting());
@@ -64,6 +67,14 @@ public class App {
         }
 
         logger.logEvent(event);
+    }
+
+    public void setStartupMessage(String startupMessage) {
+        this.startupMessage = startupMessage;
+    }
+
+    public EventLogger getDefaultLogger() {
+        return defaultLogger;
     }
 
 }/*

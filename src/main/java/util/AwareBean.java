@@ -4,6 +4,11 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.context.*;
 
+/**
+ * Определение AWARE interfaces. Осведомленные интерф. нужны если классу необходимо
+ * знать в каком контексте он находится или какое у него имя в контексте. Можно
+ * получ информацию от самого Spring во время инициализации бина. 
+ */
 public class AwareBean implements ApplicationContextAware, BeanNameAware,
         ApplicationEventPublisherAware {
 

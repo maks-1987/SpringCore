@@ -32,9 +32,7 @@ class CacheFileEventLogger extends FileEventLogger {
     }
 
     private void writeEventsFromCache() {
-        // stream() - метод коллекции Java
-        cache.stream().forEach(super::logEvent);
+        cache.stream().forEach(super::logEvent);// stream() - метод коллекции Java
     }
-
 
 }
