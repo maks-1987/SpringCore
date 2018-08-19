@@ -30,6 +30,8 @@
         <spring.ver>3.2.13.RELEASE</spring.ver>
         <junit.version>4.12</junit.version>
         <commons.io.version>2.4</commons.io.version>
+        <mockito.version>2.2.12</mockito.version>
+        <aspectj.version>2.4</aspectj.version>
 
         <java.version>9</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -57,6 +59,7 @@
             <artifactId>spring-jdbc</artifactId>
             <version>${spring.ver}</version>
         </dependency>
+
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
@@ -66,6 +69,25 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Подключим аспекты к проекту для поддержки аннотаций AspectJ -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+        </dependency>
+        <!-- Необходимо для непосредственного использования AspectJ -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>1.7.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
 
