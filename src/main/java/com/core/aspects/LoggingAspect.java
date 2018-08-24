@@ -1,4 +1,4 @@
-package aspects;
+package com.core.aspects;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;

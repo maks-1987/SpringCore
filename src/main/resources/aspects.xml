@@ -18,13 +18,14 @@
         ==============================================================-->
     <aop:aspectj-autoproxy/>
 
-    <bean id="loggingAspect" class="aspects.LoggingAspect"/>
+    <bean id="loggingAspect" class="com.core.aspects.LoggingAspect"/>
 
-    <bean id="statisticsAspect" class="aspects.StatisticsAspect"/>
+    <bean id="statisticsAspect" class="com.core.aspects.StatisticsAspect"/>
 
     <!-- Example of how to define aspect using XML -->
 
-    <bean id="consoleLoggerLimitAspect" class="aspects.ConsoleLoggerLimitAspect">
+    <bean id="consoleLoggerLimitAspect"
+          class="com.core.aspects.ConsoleLoggerLimitAspect">
         <constructor-arg value="${console.logger.max:2}"/>
         <!-- take value from properties, if not found, then default is 2 -->
         <constructor-arg ref="fileEventLogger"/>
@@ -34,13 +35,12 @@
         <aop:aspect id="consoleLimitAspect" ref="consoleLoggerLimitAspect">
 
             <aop:pointcut id="consoleLogging"
-                          expression="execution(* *.logEvent(Beans.Event))
-                            &amp;&amp;
-                            within(Loggers.ConsoleEventLogger)
-                            &amp;&amp; args(evt)" />
+                    expression="execution(* *.logEvent(com.core.Beans.Event))
+                    &amp;&amp; within(com.core.Loggers.ConsoleEventLogger)
+                    &amp;&amp; args(evt)" />
 
             <aop:around pointcut-ref="consoleLogging"
-                        method="aroundLogEvent" arg-names="jp,evt" />
+                        method="aroundLogEvent" arg-names="evt" />
         </aop:aspect>
 
     </aop:config>

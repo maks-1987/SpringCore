@@ -1,13 +1,15 @@
-package aspects;
+package com.core.aspects;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+@Aspect
 public class StatisticsAspect {
 
     private Map<Class<?>, Integer> counter = new HashMap<>();
@@ -26,6 +28,15 @@ public class StatisticsAspect {
 
     public Map<Class<?>, Integer> getCounter() {
         return Collections.unmodifiableMap(counter);
+    }
+
+    @AfterReturning("execution(* com.core.App.logEvents(..))")
+    public void outputLoggingCounter() {
+        System.out.println("core.Loggers statistics. Number of calls: ");
+        for (Map.Entry<Class<?>, Integer> entry : counter.entrySet()) {
+            System.out.println("    " + entry.getKey().getSimpleName() +
+                    ": " + entry.getValue());
+        }
     }
 
 }

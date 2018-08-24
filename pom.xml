@@ -8,30 +8,14 @@
     <artifactId>com.spring.core</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>9</source>
-                    <target>9</target>
-                    <!--<compilerVersion>${java.version}</compilerVersion>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                    <fork>true</fork>
-                    <showDeprecation>true</showDeprecation>
-                    <showWarnings>true</showWarnings>-->
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
     <properties>
-        <spring.ver>3.2.13.RELEASE</spring.ver>
+        <spring.version>3.2.13.RELEASE</spring.version>
         <junit.version>4.12</junit.version>
-        <commons.io.version>2.4</commons.io.version>
         <mockito.version>2.2.12</mockito.version>
-        <aspectj.version>2.4</aspectj.version>
+        <commons.io.version>2.4</commons.io.version>
+
+        <aspectj.version>1.8.9</aspectj.version>
+        <derby.version>10.13.1.1</derby.version>
 
         <java.version>9</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -41,23 +25,35 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>${spring.ver}</version>
+            <version>${spring.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
-            <version>${spring.ver}</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
-            <version>${spring.ver}</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
-            <version>${spring.ver}</version>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+            <version>${derby.version}</version>
+        </dependency>
+        <!-- Подключим аспекты к проекту для поддержки аннотаций AspectJ -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
         </dependency>
 
         <dependency>
@@ -71,18 +67,13 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- Подключим аспекты к проекту для поддержки аннотаций AspectJ -->
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>${aspectj.version}</version>
-        </dependency>
+
         <!-- Необходимо для непосредственного использования AspectJ -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
             <version>1.7.4</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>org.mockito</groupId>
@@ -92,5 +83,24 @@
         </dependency>
 
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <compilerVersion>${java.version}</compilerVersion>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <fork>true</fork>
+                    <showDeprecation>true</showDeprecation>
+                    <showWarnings>true</showWarnings>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

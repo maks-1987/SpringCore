@@ -1,4 +1,4 @@
-package Beans;
+package com.core.Beans;
 
 public class Client {
 
@@ -7,7 +7,7 @@ public class Client {
     private String greeting;
 
     public Client(String id, String fullName) {
-        //super();
+        super();
         this.id = id;
         this.fullName = fullName;
     }
@@ -32,13 +32,13 @@ public class Client {
         return greeting;
     }
 
-    public void setGreeting(String gr) {
-        this.greeting = gr;
+    public void setGreeting(String greeting) {
+        this.greeting = greeting;
     }
 
 /*    // этот метод заменит toString
     String getFullName() {
-        return "Beans.Client{" +
+        return "Client{" +
                 "id='" + id + '\'' +
                 ", name='" + fullName + '\'' +
                 '}';

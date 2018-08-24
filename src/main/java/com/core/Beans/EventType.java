@@ -1,4 +1,4 @@
-package Beans;
+package com.core.Beans;
 
 public enum EventType {
 

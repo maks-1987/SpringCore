@@ -1,6 +1,6 @@
-package Loggers;
+package com.core.Loggers;
 
-import Beans.Event;
+import com.core.Beans.Event;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;

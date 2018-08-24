@@ -1,4 +1,4 @@
-package util;
+package com.core.util;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanNameAware;
@@ -17,20 +17,22 @@ public class AwareBean implements ApplicationContextAware, BeanNameAware,
     private ApplicationContext ctx;
 
     public void init() {
-        System.out.println(this.getClass().getSimpleName() + " > My name is '"
-                            + name + "'");
+        System.out.println(this.getClass().getSimpleName() +
+                " > My name is '" + name + "'");
         if (ctx != null) {
-            System.out.println(this.getClass().getSimpleName() + " > My name is '"
-                            + ctx.getClass().toString() + "'");
-        } else {
-            System.out.println(this.getClass().getSimpleName() + " > Context is not set");
-        }
-        if (eventPublisher != null) {
-            System.out.println(this.getClass().getSimpleName() + " > My eventPublisher is '"
-                             + eventPublisher.getClass().toString() + "'");
+            System.out.println(this.getClass().getSimpleName() +
+                    " > My name is '" + ctx.getClass().toString() );
         } else {
             System.out.println(this.getClass().getSimpleName() +
-                            " > EventPublisher is not set");
+                    " > Context is not set");
+        }
+        if (eventPublisher != null) {
+            System.out.println(this.getClass().getSimpleName() +
+                    " > My eventPublisher is '" +
+                    eventPublisher.getClass().toString() );
+        } else {
+            System.out.println(this.getClass().getSimpleName() +
+                    " > EventPublisher is not set");
         }
     }
 
@@ -45,7 +47,8 @@ public class AwareBean implements ApplicationContextAware, BeanNameAware,
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext context) throws BeansException {
+    public void setApplicationContext(ApplicationContext context)
+            throws BeansException {
         this.ctx = context;
     }
 

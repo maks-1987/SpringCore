@@ -1,4 +1,4 @@
-package Loggers;
+package com.core.Loggers;
 
 public abstract class AbstractLogger implements EventLogger {
 

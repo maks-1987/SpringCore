@@ -4,31 +4,28 @@
        xmlns:util="http://www.springframework.org/schema/util"
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:c="http://www.springframework.org/schema/c"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/util
-            http://www.springframework.org/schema/util/spring-util-3.2.xsd">
-
-    <import resource="aspects.xml" />
+            http://www.springframework.org/schema/util/spring-util-3.2.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+<!--
+    <import resource="core.aspects.xml" />
     <import resource="loggers.xml"/>
+-->
 
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <!-- search file.properties -->
-                <value>classpath:client.properties</value>
-            </list>
-        </property>
-        <!-- будет игнорить отсутствующие ресурсы -->
-        <property name="ignoreResourceNotFound" value="true"/>
-        <!-- если ключь ек будет найден в проперти-файле Спринг ищет в системных
-         свойствах переменных окружения -->
-        <property name="systemPropertiesModeName"
-                  value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
-    </bean>
+    <!-- Different way to define PropertyPlaceholderConfigurer :) -->
+    <context:property-placeholder
+            location="${CLIENT_PROPS:classpath:client.properties},
+                      ${DB_PROPS:classpath:db.properties}"
+            system-properties-mode="OVERRIDE"
+            ignore-resource-not-found="false"/>
 
     <!-- вычитывает значения из файла .properties -->
-    <bean id="client" class="Beans.Client"
+    <bean id="client" class="com.core.Beans.Client"
           p:greeting="${greeting}">
         <constructor-arg index="0" value="${id}" />
         <constructor-arg value="${name}" />
@@ -40,45 +37,66 @@
         <entry key="ERROR" value-ref="combinedEventLogger" />
     </util:map>
 
-    <!--Тут происходит инжект зависимости в класс App c помощью атриб "ref"-->
-    <bean id="app" class="App">
+    <bean id="app" class="com.core.App">
         <constructor-arg ref="client"/>
 
-        <constructor-arg value="#{T(Beans.Event).isDay(8,17) ?
-                            cacheFileEventLogger : consoleEventLogger }"/>
-<!--    <constructor-arg ref="cacheFileEventLogger"/> -->
+        <constructor-arg value="#{
+        T(com.core.Beans.Event).isDay(8,17) ?
+            cacheFileEventLogger : consoleEventLogger }"/>
 
         <constructor-arg ref="loggerMap"/>
-            <!--<map>
-                <entry key="INFO" value-ref="consoleEventLogger"/>
-                <entry key="ERROR" value-ref="combinedEventLogger"/>
-            </map>-->
+
         <property name="startupMessage" value="#{'Hello user ' + (
                     systemProperties['os.name'].contains('Windows') ?
                     systemEnvironment['USERNAME'] : systemEnvironment['USER'] )
                     + '. Default logger is ' + app.defaultLogger.name }"/>
+        <!--    <constructor-arg ref="cacheFileEventLogger"/> -->
+
+        <!--<map>
+            <entry key="INFO" value-ref="consoleEventLogger"/>
+            <entry key="ERROR" value-ref="combinedEventLogger"/>
+        </map>-->
+
     </bean>
+<!--
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                &lt;!&ndash; search file.properties &ndash;&gt;
+                <value>classpath:client.properties</value>
+            </list>
+        </property>
+        &lt;!&ndash; будет игнорить отсутствующие ресурсы &ndash;&gt;
+        <property name="ignoreResourceNotFound" value="true"/>
+        &lt;!&ndash; если ключь ек будет найден в проперти-файле Спринг ищет в системных
+         свойствах переменных окружения &ndash;&gt;
+        <property name="systemPropertiesModeName"
+                  value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+    </bean>
+-->
+    <!--Тут происходит инжект зависимости в класс App c помощью атриб "ref"-->
 
     <!-- каждый раз создает новый бин-эвент при обращении -->
-    <bean id="event" class="Beans.Event" scope="prototype">
+    <bean id="event" class="com.core.Beans.Event" scope="prototype">
         <!--<constructor-arg>
             &lt;!&ndash;Тип первого аргумента конструктора - Date &ndash;&gt;
-            <bean class="java.util.Date"/>
+            <bean class="java.core.util.Date"/>
         </constructor-arg>
         <constructor-arg ref="dateFormat"/>-->
 
     <!--Переписано с использованием SpEL-->
         <constructor-arg value="#{new java.util.Date()}"/>
-        <constructor-arg value="#{T(java.text.DateFormat).getDateTimeInstance()}"/>
+        <constructor-arg value="#{
+        T(java.text.DateFormat).getDateTimeInstance()}"/>
     </bean>
 
     <!-- обращение к статик полям с помощью фактори-метода -->
     <!--<bean id="dateFormat" class="java.text.DateFormat"
           factory-method="getDateTimeInstance"/>-->
 
-    <bean id="monitor" class="util.Monitor"/>
-    <bean id="awared" class="util.AwareBean" init-method="init"/>
-<!--<bean id="eventType" class="Loggers.CombinedEventLogger">
+    <bean id="monitor" class="com.core.util.Monitor"/>
+    <bean id="awared" class="com.core.util.AwareBean" init-method="init"/>
+<!--<bean id="eventType" class="CombinedEventLogger">
         <constructor-arg>
             <list>
                 <ref bean="consoleEventLogger"/>
@@ -87,11 +105,11 @@
         </constructor-arg>
     </bean>-->
 
-    <!--<bean id="client" class="Beans.Client">
+    <!--<bean id="client" class="Client">
         <constructor-arg index="0" value=""/>
         <constructor-arg index="1" value=""/>
     </bean>
-    <bean id="eventLogger" class="Loggers.ConsoleEventLogger"/>
+    <bean id="eventLogger" class="ConsoleEventLogger"/>
     <bean id="app" class="App">
         <constructor-arg index="0" ref="client"/>
         <constructor-arg index="1" ref=""/>

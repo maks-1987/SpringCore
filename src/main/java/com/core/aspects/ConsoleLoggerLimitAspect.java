@@ -1,7 +1,7 @@
-package aspects;
+package com.core.aspects;
 
-import Beans.Event;
-import Loggers.EventLogger;
+import com.core.Beans.Event;
+import com.core.Loggers.EventLogger;
 import org.aspectj.lang.ProceedingJoinPoint;
 
 public class ConsoleLoggerLimitAspect {
@@ -19,8 +19,8 @@ public class ConsoleLoggerLimitAspect {
 
     public void aroundLogEvent(ProceedingJoinPoint jp, Event evt) throws Throwable {
         if (currentCount < maxCount) {
-            System.out.println("ConsoleEventLogger max count is not reached." +
-                    " Continue...");
+            System.out.println(
+                    "ConsoleEventLogger max count is not reached." + " Continue...");
             currentCount++;
             jp.proceed(new Object[] {evt});
         } else {
